@@ -1,0 +1,32 @@
+[Unit]
+Description=NexVE hypervisor management daemon
+Documentation=https://github.com/nexve/nexve
+Wants=network-online.target
+After=network-online.target libvirtd.service
+# libvirtd is socket-activated on newer Debian releases, so Wants= (not
+# Requires=) keeps the daemon starting even if libvirt is momentarily absent.
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=nexve
+SupplementaryGroups=kvm libvirt
+WorkingDirectory=/var/lib/nexve
+EnvironmentFile=-/etc/nexve/nexve.env
+ExecStart=/usr/local/lib/nexve/nexved
+Restart=on-failure
+RestartSec=2
+
+# --- hardening -------------------------------------------------------------
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=full
+ReadWritePaths=/var/lib/nexve /var/lib/libvirt/images /var/lib/libvirt/filesystems
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target

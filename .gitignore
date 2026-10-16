@@ -1,0 +1,28 @@
+# Build output
+/dist/
+backend/internal/web/dist/*
+!backend/internal/web/dist/.gitkeep
+
+# Dependencies / caches
+node_modules/
+frontend/node_modules/
+frontend/dist/
+backend/vendor/
+
+# Go build caches
+backend/go.sum.local
+
+# Local env / secrets
+.env
+*.env.local
+/etc-nexve-local/
+
+# Editor / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Logs and scratch
+*.log
+/tmp/
